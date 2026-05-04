@@ -4,301 +4,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stok Takip Sistemi</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  font-family:Segoe UI, Arial, sans-serif;
-}
-
-body{
-  margin:0;
-  background:linear-gradient(135deg,#0078d7,#8fd3ff);
-  min-height:100vh;
-}
-
-/* LOGIN */
-#loginScreen{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#0078d7,#8fd3ff);
-  z-index:999;
-}
-
-.login-window{
-  width:620px;
-  max-width:94%;
-  background:#f5f7fb;
-  border:1px solid #315f8f;
-  border-radius:8px;
-  box-shadow:0 0 28px rgba(0,0,0,.45);
-  overflow:hidden;
-}
-
-.login-title{
-  background:linear-gradient(#74aee0,#2369a3);
-  color:#fff;
-  padding:10px 14px;
-  font-size:20px;
-}
-
-.login-header{
-  display:flex;
-  gap:25px;
-  padding:28px;
-  border-bottom:1px solid #bcc7d4;
-}
-
-.login-icon{
-  font-size:72px;
-}
-
-.login-header h1{
-  margin:0 0 10px;
-  color:#063b75;
-}
-
-.login-body{
-  padding:28px 70px;
-}
-
-.form-row{
-  display:grid;
-  grid-template-columns:130px 1fr;
-  gap:12px;
-  align-items:center;
-  margin-bottom:15px;
-}
-
-input, select{
-  padding:8px;
-  border:1px solid #9daabd;
-  font-size:14px;
-}
-
-button{
-  border:1px solid #888;
-  background:linear-gradient(#ffffff,#dcdcdc);
-  padding:8px 15px;
-  border-radius:4px;
-  cursor:pointer;
-}
-
-button:hover{
-  background:linear-gradient(#eaf4ff,#c7dff8);
-}
-
-.login-footer{
-  text-align:center;
-  padding:18px;
-  border-top:1px solid #bcc7d4;
-}
-
-/* APP */
-#app{
-  display:none;
-  width:96%;
-  height:92vh;
-  margin:25px auto;
-  background:#f4f7fb;
-  border:1px solid #2d5f91;
-  border-radius:8px;
-  box-shadow:0 0 25px rgba(0,0,0,.45);
-  overflow:hidden;
-}
-
-.app-title{
-  height:34px;
-  background:linear-gradient(#2b79bd,#14518a);
-  color:#fff;
-  padding:7px 12px;
-  font-weight:bold;
-}
-
-.toolbar{
-  height:86px;
-  background:linear-gradient(#fff,#dce8f5);
-  border-bottom:1px solid #aac2da;
-  display:flex;
-  gap:18px;
-  align-items:center;
-  padding:8px 18px;
-}
-
-.tool{
-  text-align:center;
-  font-size:13px;
-  cursor:pointer;
-  min-width:70px;
-}
-
-.tool span{
-  font-size:30px;
-  display:block;
-}
-
-.main{
-  display:flex;
-  height:calc(100% - 148px);
-}
-
-.sidebar{
-  width:215px;
-  background:#eaf2fb;
-  border-right:1px solid #b7cce2;
-  padding:12px;
-}
-
-.panel{
-  background:#fff;
-  border:1px solid #b7cce2;
-  border-radius:6px;
-  margin-bottom:13px;
-  overflow:hidden;
-}
-
-.panel h3{
-  margin:0;
-  padding:8px;
-  background:linear-gradient(#d9ebff,#bcd6f0);
-  font-size:15px;
-}
-
-.panel p{
-  margin:0;
-  padding:9px 12px;
-  cursor:pointer;
-}
-
-.panel p:hover{
-  background:#e6f0fb;
-}
-
-.content{
-  flex:1;
-  padding:14px;
-  overflow:auto;
-}
-
-.search-box{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  margin-bottom:12px;
-}
-
-.search-box input{
-  flex:1;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  background:white;
-  font-size:14px;
-}
-
-th{
-  background:linear-gradient(#f8fbff,#d7e7f7);
-  border:1px solid #c9d6e3;
-  padding:8px;
-}
-
-td{
-  border:1px solid #d7d7d7;
-  padding:7px;
-  text-align:center;
-}
-
-tr:hover{
-  background:#eef6ff;
-}
-
-.statusbar{
-  height:28px;
-  background:#e9eef5;
-  border-top:1px solid #b7cce2;
-  padding:5px 12px;
-  font-size:13px;
-}
-
-/* MODAL */
-#modalBg{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.45);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:1000;
-}
-
-.modal{
-  width:540px;
-  max-width:94%;
-  background:#f4f7fb;
-  border:1px solid #2d5f91;
-  border-radius:8px;
-  overflow:hidden;
-  box-shadow:0 0 25px rgba(0,0,0,.5);
-}
-
-.modal-title{
-  background:linear-gradient(#2b79bd,#14518a);
-  color:white;
-  padding:9px 12px;
-  font-weight:bold;
-}
-
-.modal-body{
-  padding:18px;
-}
-
-.modal-actions{
-  text-align:center;
-  margin-top:15px;
-}
-
+*{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
+body{margin:0;background:linear-gradient(135deg,#0078d7,#8fd3ff);min-height:100vh}
+#loginScreen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0078d7,#8fd3ff);z-index:999}
+.login-window{width:620px;max-width:94%;background:#f5f7fb;border:1px solid #315f8f;border-radius:8px;box-shadow:0 0 28px rgba(0,0,0,.45);overflow:hidden}
+.login-title{background:linear-gradient(#74aee0,#2369a3);color:white;padding:10px 14px;font-size:20px}
+.login-header{display:flex;gap:25px;padding:28px;border-bottom:1px solid #bcc7d4}
+.login-icon{font-size:72px}
+.login-header h1{margin:0 0 10px;color:#063b75}
+.login-body{padding:28px 70px}
+.form-row{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin-bottom:15px}
+input,select{padding:8px;border:1px solid #9daabd;font-size:14px}
+button{border:1px solid #888;background:linear-gradient(#fff,#dcdcdc);padding:8px 15px;border-radius:4px;cursor:pointer}
+button:hover{background:linear-gradient(#eaf4ff,#c7dff8)}
+.login-footer{text-align:center;padding:18px;border-top:1px solid #bcc7d4}
+#app{display:none;width:96%;height:92vh;margin:25px auto;background:#f4f7fb;border:1px solid #2d5f91;border-radius:8px;box-shadow:0 0 25px rgba(0,0,0,.45);overflow:hidden}
+.app-title{height:34px;background:linear-gradient(#2b79bd,#14518a);color:white;padding:7px 12px;font-weight:bold}
+.toolbar{height:86px;background:linear-gradient(#fff,#dce8f5);border-bottom:1px solid #aac2da;display:flex;gap:18px;align-items:center;padding:8px 18px}
+.tool{text-align:center;font-size:13px;cursor:pointer;min-width:70px}
+.tool span{font-size:30px;display:block}
+.main{display:flex;height:calc(100% - 148px)}
+.sidebar{width:215px;background:#eaf2fb;border-right:1px solid #b7cce2;padding:12px}
+.panel{background:white;border:1px solid #b7cce2;border-radius:6px;margin-bottom:13px;overflow:hidden}
+.panel h3{margin:0;padding:8px;background:linear-gradient(#d9ebff,#bcd6f0);font-size:15px}
+.panel p{margin:0;padding:9px 12px;cursor:pointer}
+.panel p:hover{background:#e6f0fb}
+.content{flex:1;padding:14px;overflow:auto}
+.search-box{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.search-box input{flex:1}
+table{width:100%;border-collapse:collapse;background:white;font-size:14px}
+th{background:linear-gradient(#f8fbff,#d7e7f7);border:1px solid #c9d6e3;padding:8px}
+td{border:1px solid #d7d7d7;padding:7px;text-align:center}
+tr:hover{background:#eef6ff}
+.statusbar{height:28px;background:#e9eef5;border-top:1px solid #b7cce2;padding:5px 12px;font-size:13px}
+#modalBg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:1000}
+.modal{width:540px;max-width:94%;background:#f4f7fb;border:1px solid #2d5f91;border-radius:8px;overflow:hidden;box-shadow:0 0 25px rgba(0,0,0,.5)}
+.modal-title{background:linear-gradient(#2b79bd,#14518a);color:white;padding:9px 12px;font-weight:bold}
+.modal-body{padding:18px}
+.modal-actions{text-align:center;margin-top:15px}
 @media(max-width:800px){
-  #app{
-    height:auto;
-    margin:10px auto;
-  }
-
-  .toolbar{
-    height:auto;
-    flex-wrap:wrap;
-  }
-
-  .main{
-    flex-direction:column;
-    height:auto;
-  }
-
-  .sidebar{
-    width:100%;
-  }
-
-  .form-row{
-    grid-template-columns:1fr;
-  }
-
-  .login-body{
-    padding:25px;
-  }
+#app{height:auto;margin:10px auto}
+.toolbar{height:auto;flex-wrap:wrap}
+.main{flex-direction:column;height:auto}
+.sidebar{width:100%}
+.form-row{grid-template-columns:1fr}
+.login-body{padding:25px}
 }
 </style>
 </head>
-
 <body>
 
 <div id="loginScreen">
   <div class="login-window">
     <div class="login-title">🔐 Stok Takip Sistemi - Giriş</div>
-
     <div class="login-header">
       <div class="login-icon">🔒</div>
       <div>
@@ -306,25 +65,13 @@ tr:hover{
         <p>Lütfen kullanıcı adınızı ve şifrenizi giriniz.</p>
       </div>
     </div>
-
     <div class="login-body">
-      <div class="form-row">
-        <b>Kullanıcı Adı:</b>
-        <input id="username" value="admin">
-      </div>
-
-      <div class="form-row">
-        <b>Şifre:</b>
-        <input id="password" type="password" value="1234">
-      </div>
-
-      <label>
-        <input type="checkbox"> Beni Hatırla
-      </label>
+      <div class="form-row"><b>Kullanıcı Adı:</b><input id="username" value="admin"></div>
+      <div class="form-row"><b>Şifre:</b><input id="password" type="password" value="1234"></div>
+      <label><input type="checkbox"> Beni Hatırla</label>
     </div>
-
     <div class="login-footer">
-      <button onclick="login()">🔑 Giriş Yap</button>
+      <button onclick="adminLogin()">🔑 Giriş Yap</button>
       <button onclick="alert('İptal edildi')">❌ İptal</button>
     </div>
   </div>
@@ -355,7 +102,6 @@ tr:hover{
         <p>📊 Raporlar</p>
         <p>⚙️ Ayarlar</p>
       </div>
-
       <div class="panel">
         <h3>Bilgiler</h3>
         <p>Toplam Ürün: <b id="totalProducts">0</b></p>
@@ -373,21 +119,10 @@ tr:hover{
       </div>
 
       <h3>Ürün Listesi</h3>
-
       <table>
         <thead>
           <tr>
-            <th>Seç</th>
-            <th>ID</th>
-            <th>Ürün Adı</th>
-            <th>Barkod</th>
-            <th>Kategori</th>
-            <th>Raf</th>
-            <th>Stok</th>
-            <th>Birim</th>
-            <th>Alış</th>
-            <th>Satış</th>
-            <th>Durum</th>
+            <th>Seç</th><th>ID</th><th>Ürün Adı</th><th>Barkod</th><th>Kategori</th><th>Raf</th><th>Stok</th><th>Birim</th><th>Alış</th><th>Satış</th><th>Durum</th>
           </tr>
         </thead>
         <tbody id="productTable"></tbody>
@@ -401,57 +136,16 @@ tr:hover{
 <div id="modalBg">
   <div class="modal">
     <div class="modal-title">Yeni Ürün / Düzenle</div>
-
     <div class="modal-body">
       <input type="hidden" id="editId">
-
-      <div class="form-row">
-        <b>Ürün Adı:</b>
-        <input id="productName">
-      </div>
-
-      <div class="form-row">
-        <b>Barkod:</b>
-        <div>
-          <input id="barcodeInput">
-          <button onclick="generateBarcodeToInput()">Oluştur</button>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <b>Kategori:</b>
-        <input id="categoryInput" value="Elektronik">
-      </div>
-
-      <div class="form-row">
-        <b>Raf:</b>
-        <input id="shelfInput" value="A-01">
-      </div>
-
-      <div class="form-row">
-        <b>Stok:</b>
-        <input id="quantityInput" type="number" value="1">
-      </div>
-
-      <div class="form-row">
-        <b>Birim:</b>
-        <select id="unitInput">
-          <option>Adet</option>
-          <option>Metre</option>
-          <option>Kutu</option>
-        </select>
-      </div>
-
-      <div class="form-row">
-        <b>Alış Fiyatı:</b>
-        <input id="buyInput" type="number" value="0">
-      </div>
-
-      <div class="form-row">
-        <b>Satış Fiyatı:</b>
-        <input id="sellInput" type="number" value="0">
-      </div>
-
+      <div class="form-row"><b>Ürün Adı:</b><input id="productName"></div>
+      <div class="form-row"><b>Barkod:</b><div><input id="barcodeInput"><button onclick="generateBarcodeToInput()">Oluştur</button></div></div>
+      <div class="form-row"><b>Kategori:</b><input id="categoryInput" value="Elektronik"></div>
+      <div class="form-row"><b>Raf:</b><input id="shelfInput" value="A-01"></div>
+      <div class="form-row"><b>Stok:</b><input id="quantityInput" type="number" value="1"></div>
+      <div class="form-row"><b>Birim:</b><select id="unitInput"><option>Adet</option><option>Metre</option><option>Kutu</option></select></div>
+      <div class="form-row"><b>Alış Fiyatı:</b><input id="buyInput" type="number" value="0"></div>
+      <div class="form-row"><b>Satış Fiyatı:</b><input id="sellInput" type="number" value="0"></div>
       <div class="modal-actions">
         <button onclick="saveProduct()">💾 Kaydet</button>
         <button onclick="closeModal()">İptal</button>
@@ -468,48 +162,18 @@ let products = JSON.parse(localStorage.getItem("products") || "[]");
 
 if(products.length === 0){
   products = [
-    {
-      id:1,
-      name:"Arduino Uno R3",
-      barcode:"8691234567890",
-      category:"Elektronik",
-      shelf:"A-01",
-      quantity:25,
-      unit:"Adet",
-      buy:350,
-      sell:450
-    },
-    {
-      id:2,
-      name:"Direnç 1K",
-      barcode:"8691234567891",
-      category:"Elektronik",
-      shelf:"A-02",
-      quantity:120,
-      unit:"Adet",
-      buy:0.10,
-      sell:0.25
-    },
-    {
-      id:3,
-      name:"16x2 LCD Display",
-      barcode:"8691234567892",
-      category:"Elektronik",
-      shelf:"A-06",
-      quantity:30,
-      unit:"Adet",
-      buy:35,
-      sell:55
-    }
+    {id:1,name:"Arduino Uno R3",barcode:"8691234567890",category:"Elektronik",shelf:"A-01",quantity:25,unit:"Adet",buy:350,sell:450},
+    {id:2,name:"Direnç 1K",barcode:"8691234567891",category:"Elektronik",shelf:"A-02",quantity:120,unit:"Adet",buy:0.10,sell:0.25},
+    {id:3,name:"16x2 LCD Display",barcode:"8691234567892",category:"Elektronik",shelf:"A-06",quantity:30,unit:"Adet",buy:35,sell:55}
   ];
   saveLocal();
 }
 
-function login(){
-  const user = document.getElementById("username").value;
-  const pass = document.getElementById("password").value;
+function adminLogin(){
+  const userValue = document.getElementById("username").value.trim();
+  const passValue = document.getElementById("password").value.trim();
 
-  if(user === ADMIN_USER && pass === ADMIN_PASS){
+  if(userValue === ADMIN_USER && passValue === ADMIN_PASS){
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("app").style.display = "block";
     renderProducts();
@@ -561,7 +225,7 @@ function saveProduct(){
     return;
   }
 
-  const productData = {
+  const data = {
     id: editId ? Number(editId) : Date.now(),
     name: name,
     barcode: document.getElementById("barcodeInput").value,
@@ -574,11 +238,9 @@ function saveProduct(){
   };
 
   if(editId){
-    products = products.map(function(product){
-      return product.id === productData.id ? productData : product;
-    });
+    products = products.map(p => p.id === data.id ? data : p);
   }else{
-    products.push(productData);
+    products.push(data);
   }
 
   saveLocal();
@@ -593,49 +255,29 @@ function getSelectedId(){
 
 function editSelected(){
   const id = getSelectedId();
+  if(!id){ alert("Önce bir ürün seç."); return; }
 
-  if(!id){
-    alert("Önce bir ürün seç.");
-    return;
-  }
+  const p = products.find(x => x.id === id);
+  if(!p){ alert("Ürün bulunamadı."); return; }
 
-  const product = products.find(function(p){
-    return p.id === id;
-  });
-
-  if(!product){
-    alert("Ürün bulunamadı.");
-    return;
-  }
-
-  document.getElementById("editId").value = product.id;
-  document.getElementById("productName").value = product.name;
-  document.getElementById("barcodeInput").value = product.barcode;
-  document.getElementById("categoryInput").value = product.category;
-  document.getElementById("shelfInput").value = product.shelf;
-  document.getElementById("quantityInput").value = product.quantity;
-  document.getElementById("unitInput").value = product.unit;
-  document.getElementById("buyInput").value = product.buy;
-  document.getElementById("sellInput").value = product.sell;
-
+  document.getElementById("editId").value = p.id;
+  document.getElementById("productName").value = p.name;
+  document.getElementById("barcodeInput").value = p.barcode;
+  document.getElementById("categoryInput").value = p.category;
+  document.getElementById("shelfInput").value = p.shelf;
+  document.getElementById("quantityInput").value = p.quantity;
+  document.getElementById("unitInput").value = p.unit;
+  document.getElementById("buyInput").value = p.buy;
+  document.getElementById("sellInput").value = p.sell;
   document.getElementById("modalBg").style.display = "flex";
 }
 
 function deleteSelected(){
   const id = getSelectedId();
+  if(!id){ alert("Önce bir ürün seç."); return; }
 
-  if(!id){
-    alert("Önce bir ürün seç.");
-    return;
-  }
-
-  const confirmDelete = confirm("Seçili ürünü silmek istiyor musun?");
-
-  if(confirmDelete){
-    products = products.filter(function(product){
-      return product.id !== id;
-    });
-
+  if(confirm("Seçili ürünü silmek istiyor musun?")){
+    products = products.filter(p => p.id !== id);
     saveLocal();
     renderProducts();
   }
@@ -645,47 +287,39 @@ function renderProducts(){
   const searchText = document.getElementById("searchInput").value.toLowerCase();
   const table = document.getElementById("productTable");
 
-  const filteredProducts = products.filter(function(product){
-    return (
-      product.name.toLowerCase().includes(searchText) ||
-      product.barcode.toLowerCase().includes(searchText) ||
-      product.category.toLowerCase().includes(searchText) ||
-      product.shelf.toLowerCase().includes(searchText)
-    );
-  });
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(searchText) ||
+    p.barcode.toLowerCase().includes(searchText) ||
+    p.category.toLowerCase().includes(searchText) ||
+    p.shelf.toLowerCase().includes(searchText)
+  );
 
   table.innerHTML = "";
 
-  filteredProducts.forEach(function(product){
-    const status = product.quantity < 5 ? "Düşük" : "Aktif";
-    const color = product.quantity < 5 ? "red" : "green";
+  filtered.forEach(p => {
+    const status = p.quantity < 5 ? "Düşük" : "Aktif";
+    const color = p.quantity < 5 ? "red" : "green";
 
     table.innerHTML += `
       <tr>
-        <td><input type="radio" name="selectedProduct" value="${product.id}"></td>
-        <td>${product.id}</td>
-        <td>${product.name}</td>
-        <td>${product.barcode}</td>
-        <td>${product.category}</td>
-        <td>${product.shelf}</td>
-        <td>${product.quantity}</td>
-        <td>${product.unit}</td>
-        <td>${product.buy} ₺</td>
-        <td>${product.sell} ₺</td>
+        <td><input type="radio" name="selectedProduct" value="${p.id}"></td>
+        <td>${p.id}</td>
+        <td>${p.name}</td>
+        <td>${p.barcode}</td>
+        <td>${p.category}</td>
+        <td>${p.shelf}</td>
+        <td>${p.quantity}</td>
+        <td>${p.unit}</td>
+        <td>${p.buy} ₺</td>
+        <td>${p.sell} ₺</td>
         <td style="color:${color};font-weight:bold">${status}</td>
       </tr>
     `;
   });
 
   document.getElementById("totalProducts").innerText = products.length;
-
-  document.getElementById("totalStock").innerText = products.reduce(function(total, product){
-    return total + Number(product.quantity);
-  }, 0);
-
-  document.getElementById("lowStock").innerText = products.filter(function(product){
-    return product.quantity < 5;
-  }).length;
+  document.getElementById("totalStock").innerText = products.reduce((t,p)=>t+Number(p.quantity),0);
+  document.getElementById("lowStock").innerText = products.filter(p=>p.quantity<5).length;
 }
 
 function clearSearch(){
@@ -695,9 +329,8 @@ function clearSearch(){
 
 function exportCSV(){
   let csv = "ID,Ürün,Barkod,Kategori,Raf,Stok,Birim,Alış,Satış\n";
-
-  products.forEach(function(product){
-    csv += `${product.id},${product.name},${product.barcode},${product.category},${product.shelf},${product.quantity},${product.unit},${product.buy},${product.sell}\n`;
+  products.forEach(p => {
+    csv += `${p.id},${p.name},${p.barcode},${p.category},${p.shelf},${p.quantity},${p.unit},${p.buy},${p.sell}\n`;
   });
 
   const file = new Blob([csv], {type:"text/csv"});
@@ -708,7 +341,7 @@ function exportCSV(){
 }
 
 function backupData(){
-  const file = new Blob([JSON.stringify(products, null, 2)], {type:"application/json"});
+  const file = new Blob([JSON.stringify(products,null,2)], {type:"application/json"});
   const link = document.createElement("a");
   link.href = URL.createObjectURL(file);
   link.download = "stok-yedek.json";
