@@ -2,248 +2,720 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stok Takip Sistemi</title>
 
 <style>
+*{
+  box-sizing:border-box;
+  font-family:Segoe UI, Arial, sans-serif;
+}
+
 body{
-margin:0;
-font-family:Segoe UI;
-background:linear-gradient(135deg,#0b8ee8,#7ed6ff);
+  margin:0;
+  background:linear-gradient(135deg,#0078d7,#8fd3ff);
+  min-height:100vh;
 }
 
-/* LOGIN /
-.login{
-position:fixed;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
+/* LOGIN */
+#loginScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#0078d7,#8fd3ff);
+  z-index:999;
 }
 
-.login-box{
-width:600px;
-background:#f4f7fb;
-border-radius:8px;
-box-shadow:0 0 30px #0006;
-overflow:hidden;
+.login-window{
+  width:620px;
+  max-width:94%;
+  background:#f5f7fb;
+  border:1px solid #315f8f;
+  border-radius:8px;
+  box-shadow:0 0 28px rgba(0,0,0,.45);
+  overflow:hidden;
 }
 
 .login-title{
-background:linear-gradient(#2b79bd,#14518a);
-color:white;
-padding:12px;
-font-size:20px;
+  background:linear-gradient(#74aee0,#2369a3);
+  color:#fff;
+  padding:10px 14px;
+  font-size:20px;
+}
+
+.login-header{
+  display:flex;
+  gap:25px;
+  padding:28px;
+  border-bottom:1px solid #bcc7d4;
+}
+
+.login-icon{
+  font-size:72px;
+}
+
+.login-header h1{
+  margin:0 0 10px;
+  color:#063b75;
 }
 
 .login-body{
-padding:30px;
+  padding:28px 70px;
 }
 
-.login-body input{
-width:100%;
-padding:10px;
-margin:10px 0;
-border:1px solid #aab7c5;
+.form-row{
+  display:grid;
+  grid-template-columns:130px 1fr;
+  gap:12px;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+input, select{
+  padding:8px;
+  border:1px solid #9daabd;
+  font-size:14px;
 }
 
 button{
-border:1px solid #888;
-background:linear-gradient(#fff,#dcdcdc);
-padding:8px 14px;
-cursor:pointer;
+  border:1px solid #888;
+  background:linear-gradient(#ffffff,#dcdcdc);
+  padding:8px 15px;
+  border-radius:4px;
+  cursor:pointer;
 }
 
 button:hover{
-background:linear-gradient(#eaf4ff,#c7dff8);
+  background:linear-gradient(#eaf4ff,#c7dff8);
 }
 
-/ APP /
-.app{
-display:none;
+.login-footer{
+  text-align:center;
+  padding:18px;
+  border-top:1px solid #bcc7d4;
 }
 
-.topbar{
-height:35px;
-background:linear-gradient(#2b79bd,#14518a);
-color:white;
-padding:8px;
+/* APP */
+#app{
+  display:none;
+  width:96%;
+  height:92vh;
+  margin:25px auto;
+  background:#f4f7fb;
+  border:1px solid #2d5f91;
+  border-radius:8px;
+  box-shadow:0 0 25px rgba(0,0,0,.45);
+  overflow:hidden;
+}
+
+.app-title{
+  height:34px;
+  background:linear-gradient(#2b79bd,#14518a);
+  color:#fff;
+  padding:7px 12px;
+  font-weight:bold;
 }
 
 .toolbar{
-background:linear-gradient(#fff,#dce8f5);
-padding:10px;
-display:flex;
-gap:10px;
-border-bottom:1px solid #aac2da;
+  height:86px;
+  background:linear-gradient(#fff,#dce8f5);
+  border-bottom:1px solid #aac2da;
+  display:flex;
+  gap:18px;
+  align-items:center;
+  padding:8px 18px;
 }
 
-.layout{
-display:flex;
-height:calc(100vh - 80px);
+.tool{
+  text-align:center;
+  font-size:13px;
+  cursor:pointer;
+  min-width:70px;
 }
 
-/ SIDEBAR /
+.tool span{
+  font-size:30px;
+  display:block;
+}
+
+.main{
+  display:flex;
+  height:calc(100% - 148px);
+}
+
 .sidebar{
-width:200px;
-background:#eaf2fb;
-border-right:1px solid #b7cce2;
-padding:10px;
+  width:215px;
+  background:#eaf2fb;
+  border-right:1px solid #b7cce2;
+  padding:12px;
 }
 
-.menu-item{
-padding:8px;
-cursor:pointer;
+.panel{
+  background:#fff;
+  border:1px solid #b7cce2;
+  border-radius:6px;
+  margin-bottom:13px;
+  overflow:hidden;
 }
 
-.menu-item:hover{
-background:#dbe9f7;
+.panel h3{
+  margin:0;
+  padding:8px;
+  background:linear-gradient(#d9ebff,#bcd6f0);
+  font-size:15px;
 }
 
-/ CONTENT /
+.panel p{
+  margin:0;
+  padding:9px 12px;
+  cursor:pointer;
+}
+
+.panel p:hover{
+  background:#e6f0fb;
+}
+
 .content{
-flex:1;
-padding:15px;
-overflow:auto;
+  flex:1;
+  padding:14px;
+  overflow:auto;
 }
 
-.search{
-margin-bottom:10px;
+.search-box{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-bottom:12px;
 }
 
-.search input{
-padding:8px;
-width:60%;
+.search-box input{
+  flex:1;
 }
 
-/ TABLE */
 table{
-width:100%;
-border-collapse:collapse;
-background:white;
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  font-size:14px;
 }
 
 th{
-background:linear-gradient(#f8fbff,#d7e7f7);
-padding:8px;
-border:1px solid #c9d6e3;
+  background:linear-gradient(#f8fbff,#d7e7f7);
+  border:1px solid #c9d6e3;
+  padding:8px;
 }
 
 td{
-border:1px solid #ddd;
-padding:7px;
-text-align:center;
+  border:1px solid #d7d7d7;
+  padding:7px;
+  text-align:center;
 }
 
 tr:hover{
-background:#eef6ff;
+  background:#eef6ff;
+}
+
+.statusbar{
+  height:28px;
+  background:#e9eef5;
+  border-top:1px solid #b7cce2;
+  padding:5px 12px;
+  font-size:13px;
+}
+
+/* MODAL */
+#modalBg{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+}
+
+.modal{
+  width:540px;
+  max-width:94%;
+  background:#f4f7fb;
+  border:1px solid #2d5f91;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 0 25px rgba(0,0,0,.5);
+}
+
+.modal-title{
+  background:linear-gradient(#2b79bd,#14518a);
+  color:white;
+  padding:9px 12px;
+  font-weight:bold;
+}
+
+.modal-body{
+  padding:18px;
+}
+
+.modal-actions{
+  text-align:center;
+  margin-top:15px;
+}
+
+@media(max-width:800px){
+  #app{
+    height:auto;
+    margin:10px auto;
+  }
+
+  .toolbar{
+    height:auto;
+    flex-wrap:wrap;
+  }
+
+  .main{
+    flex-direction:column;
+    height:auto;
+  }
+
+  .sidebar{
+    width:100%;
+  }
+
+  .form-row{
+    grid-template-columns:1fr;
+  }
+
+  .login-body{
+    padding:25px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div class="login" id="login">
-<div class="login-box">
-<div class="login-title">🔐 Stok Takip Sistemi</div>
-<div class="login-body">
-<input id="user" placeholder="Kullanıcı Adı" value="admin">
-<input id="pass" type="password" value="1234">
-<button onclick="login()">Giriş Yap</button>
+<div id="loginScreen">
+  <div class="login-window">
+    <div class="login-title">🔐 Stok Takip Sistemi - Giriş</div>
+
+    <div class="login-header">
+      <div class="login-icon">🔒</div>
+      <div>
+        <h1>Stok Takip Sistemi</h1>
+        <p>Lütfen kullanıcı adınızı ve şifrenizi giriniz.</p>
+      </div>
+    </div>
+
+    <div class="login-body">
+      <div class="form-row">
+        <b>Kullanıcı Adı:</b>
+        <input id="username" value="admin">
+      </div>
+
+      <div class="form-row">
+        <b>Şifre:</b>
+        <input id="password" type="password" value="1234">
+      </div>
+
+      <label>
+        <input type="checkbox"> Beni Hatırla
+      </label>
+    </div>
+
+    <div class="login-footer">
+      <button onclick="login()">🔑 Giriş Yap</button>
+      <button onclick="alert('İptal edildi')">❌ İptal</button>
+    </div>
+  </div>
 </div>
+
+<div id="app">
+  <div class="app-title">📦 Stok Takip Sistemi - Admin Paneli</div>
+
+  <div class="toolbar">
+    <div class="tool" onclick="openModal()"><span>➕</span>Yeni Ürün</div>
+    <div class="tool" onclick="editSelected()"><span>📝</span>Düzenle</div>
+    <div class="tool" onclick="deleteSelected()"><span>❌</span>Sil</div>
+    <div class="tool" onclick="renderProducts()"><span>🔄</span>Yenile</div>
+    <div class="tool" onclick="alert('Raporlar yakında eklenecek')"><span>📊</span>Raporlar</div>
+    <div class="tool" onclick="exportCSV()"><span>📗</span>Excel</div>
+    <div class="tool" onclick="backupData()"><span>💾</span>Yedekle</div>
+    <div class="tool" onclick="logout()"><span>🔴</span>Çıkış</div>
+  </div>
+
+  <div class="main">
+    <div class="sidebar">
+      <div class="panel">
+        <h3>Ana Menü</h3>
+        <p>📦 Ürünler</p>
+        <p>📁 Kategoriler</p>
+        <p>🪜 Raflar</p>
+        <p>🔁 Hareketler</p>
+        <p>📊 Raporlar</p>
+        <p>⚙️ Ayarlar</p>
+      </div>
+
+      <div class="panel">
+        <h3>Bilgiler</h3>
+        <p>Toplam Ürün: <b id="totalProducts">0</b></p>
+        <p>Toplam Stok: <b id="totalStock">0</b></p>
+        <p>Düşük Stok: <b id="lowStock">0</b></p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="search-box">
+        <b>Ürün Ara:</b>
+        <input id="searchInput" placeholder="Ürün adı, barkod, kategori veya raf ara..." oninput="renderProducts()">
+        <button onclick="renderProducts()">🔍 Ara</button>
+        <button onclick="clearSearch()">Temizle</button>
+      </div>
+
+      <h3>Ürün Listesi</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Seç</th>
+            <th>ID</th>
+            <th>Ürün Adı</th>
+            <th>Barkod</th>
+            <th>Kategori</th>
+            <th>Raf</th>
+            <th>Stok</th>
+            <th>Birim</th>
+            <th>Alış</th>
+            <th>Satış</th>
+            <th>Durum</th>
+          </tr>
+        </thead>
+        <tbody id="productTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="statusbar">Hoşgeldiniz, Admin | Version 1.0.0</div>
 </div>
-</div>
 
-<!-- APP -->
-<div class="app" id="app">
+<div id="modalBg">
+  <div class="modal">
+    <div class="modal-title">Yeni Ürün / Düzenle</div>
 
-<div class="topbar">📦 Stok Takip Sistemi - Admin Panel</div>
+    <div class="modal-body">
+      <input type="hidden" id="editId">
 
-<div class="toolbar">
-<button onclick="add()">➕ Yeni Ürün</button>
-<button onclick="render()">🔄 Yenile</button>
-</div>
+      <div class="form-row">
+        <b>Ürün Adı:</b>
+        <input id="productName">
+      </div>
 
-<div class="layout">
+      <div class="form-row">
+        <b>Barkod:</b>
+        <div>
+          <input id="barcodeInput">
+          <button onclick="generateBarcodeToInput()">Oluştur</button>
+        </div>
+      </div>
 
-<div class="sidebar">
-<div class="menu-item">📦 Ürünler</div>
-<div class="menu-item">📁 Kategoriler</div>
-<div class="menu-item">📊 Raporlar</div>
-</div>
+      <div class="form-row">
+        <b>Kategori:</b>
+        <input id="categoryInput" value="Elektronik">
+      </div>
 
-<div class="content">
+      <div class="form-row">
+        <b>Raf:</b>
+        <input id="shelfInput" value="A-01">
+      </div>
 
-<div class="search">
-<input id="search" placeholder="Ara..." oninput="render()">
-</div>
+      <div class="form-row">
+        <b>Stok:</b>
+        <input id="quantityInput" type="number" value="1">
+      </div>
 
-<table>
-<thead>
-<tr>
-<th>Ürün</th>
-<th>Barkod</th>
-<th>Adet</th>
-<th>Sil</th>
-</tr>
-</thead>
-<tbody id="list"></tbody>
-</table>
+      <div class="form-row">
+        <b>Birim:</b>
+        <select id="unitInput">
+          <option>Adet</option>
+          <option>Metre</option>
+          <option>Kutu</option>
+        </select>
+      </div>
 
-</div>
-</div>
+      <div class="form-row">
+        <b>Alış Fiyatı:</b>
+        <input id="buyInput" type="number" value="0">
+      </div>
+
+      <div class="form-row">
+        <b>Satış Fiyatı:</b>
+        <input id="sellInput" type="number" value="0">
+      </div>
+
+      <div class="modal-actions">
+        <button onclick="saveProduct()">💾 Kaydet</button>
+        <button onclick="closeModal()">İptal</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-let products = JSON.parse(localStorage.getItem("stok")||"[]");
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "1234";
+
+let products = JSON.parse(localStorage.getItem("products") || "[]");
+
+if(products.length === 0){
+  products = [
+    {
+      id:1,
+      name:"Arduino Uno R3",
+      barcode:"8691234567890",
+      category:"Elektronik",
+      shelf:"A-01",
+      quantity:25,
+      unit:"Adet",
+      buy:350,
+      sell:450
+    },
+    {
+      id:2,
+      name:"Direnç 1K",
+      barcode:"8691234567891",
+      category:"Elektronik",
+      shelf:"A-02",
+      quantity:120,
+      unit:"Adet",
+      buy:0.10,
+      sell:0.25
+    },
+    {
+      id:3,
+      name:"16x2 LCD Display",
+      barcode:"8691234567892",
+      category:"Elektronik",
+      shelf:"A-06",
+      quantity:30,
+      unit:"Adet",
+      buy:35,
+      sell:55
+    }
+  ];
+  saveLocal();
+}
 
 function login(){
-if(user.value=="admin" && pass.value=="1234"){
-login.style.display="none";
-app.style.display="block";
-render();
-}else{
-alert("Hatalı giriş");
-}
-}
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
 
-function barcode(){
-return "869"+Math.floor(10000000+Math.random()*90000000);
-}
-
-function add(){
-let name = prompt("Ürün adı:");
-if(!name) return;
-
-products.push({
-name:name,
-barcode:barcode(),
-qty:1
-});
-
-save();
-render();
+  if(user === ADMIN_USER && pass === ADMIN_PASS){
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    renderProducts();
+  }else{
+    alert("Hatalı kullanıcı adı veya şifre!");
+  }
 }
 
-function del(i){
-products.splice(i,1);
-save();
-render();
+function logout(){
+  document.getElementById("loginScreen").style.display = "flex";
+  document.getElementById("app").style.display = "none";
 }
 
-function save(){
-localStorage.setItem("stok",JSON.stringify(products));
+function saveLocal(){
+  localStorage.setItem("products", JSON.stringify(products));
 }
 
-function render(){
-let q = search.value.toLowerCase();
-list.innerHTML="";
-products
-.filter(p=>p.name.toLowerCase().includes(q))
-.forEach((p,i)=>{
-list.innerHTML += <tr> <td>${p.name}</td> <td>${p.barcode}</td> <td>${p.qty}</td> <td><button onclick="del(${i})">❌</button></td> </tr>;
-});
+function makeBarcode(){
+  return "869" + Math.floor(1000000000 + Math.random() * 9000000000);
 }
+
+function generateBarcodeToInput(){
+  document.getElementById("barcodeInput").value = makeBarcode();
+}
+
+function openModal(){
+  document.getElementById("editId").value = "";
+  document.getElementById("productName").value = "";
+  document.getElementById("barcodeInput").value = makeBarcode();
+  document.getElementById("categoryInput").value = "Elektronik";
+  document.getElementById("shelfInput").value = "A-01";
+  document.getElementById("quantityInput").value = 1;
+  document.getElementById("unitInput").value = "Adet";
+  document.getElementById("buyInput").value = 0;
+  document.getElementById("sellInput").value = 0;
+  document.getElementById("modalBg").style.display = "flex";
+}
+
+function closeModal(){
+  document.getElementById("modalBg").style.display = "none";
+}
+
+function saveProduct(){
+  const editId = document.getElementById("editId").value;
+  const name = document.getElementById("productName").value.trim();
+
+  if(name === ""){
+    alert("Ürün adı boş olamaz.");
+    return;
+  }
+
+  const productData = {
+    id: editId ? Number(editId) : Date.now(),
+    name: name,
+    barcode: document.getElementById("barcodeInput").value,
+    category: document.getElementById("categoryInput").value,
+    shelf: document.getElementById("shelfInput").value,
+    quantity: Number(document.getElementById("quantityInput").value),
+    unit: document.getElementById("unitInput").value,
+    buy: Number(document.getElementById("buyInput").value),
+    sell: Number(document.getElementById("sellInput").value)
+  };
+
+  if(editId){
+    products = products.map(function(product){
+      return product.id === productData.id ? productData : product;
+    });
+  }else{
+    products.push(productData);
+  }
+
+  saveLocal();
+  closeModal();
+  renderProducts();
+}
+
+function getSelectedId(){
+  const selected = document.querySelector('input[name="selectedProduct"]:checked');
+  return selected ? Number(selected.value) : null;
+}
+
+function editSelected(){
+  const id = getSelectedId();
+
+  if(!id){
+    alert("Önce bir ürün seç.");
+    return;
+  }
+
+  const product = products.find(function(p){
+    return p.id === id;
+  });
+
+  if(!product){
+    alert("Ürün bulunamadı.");
+    return;
+  }
+
+  document.getElementById("editId").value = product.id;
+  document.getElementById("productName").value = product.name;
+  document.getElementById("barcodeInput").value = product.barcode;
+  document.getElementById("categoryInput").value = product.category;
+  document.getElementById("shelfInput").value = product.shelf;
+  document.getElementById("quantityInput").value = product.quantity;
+  document.getElementById("unitInput").value = product.unit;
+  document.getElementById("buyInput").value = product.buy;
+  document.getElementById("sellInput").value = product.sell;
+
+  document.getElementById("modalBg").style.display = "flex";
+}
+
+function deleteSelected(){
+  const id = getSelectedId();
+
+  if(!id){
+    alert("Önce bir ürün seç.");
+    return;
+  }
+
+  const confirmDelete = confirm("Seçili ürünü silmek istiyor musun?");
+
+  if(confirmDelete){
+    products = products.filter(function(product){
+      return product.id !== id;
+    });
+
+    saveLocal();
+    renderProducts();
+  }
+}
+
+function renderProducts(){
+  const searchText = document.getElementById("searchInput").value.toLowerCase();
+  const table = document.getElementById("productTable");
+
+  const filteredProducts = products.filter(function(product){
+    return (
+      product.name.toLowerCase().includes(searchText) ||
+      product.barcode.toLowerCase().includes(searchText) ||
+      product.category.toLowerCase().includes(searchText) ||
+      product.shelf.toLowerCase().includes(searchText)
+    );
+  });
+
+  table.innerHTML = "";
+
+  filteredProducts.forEach(function(product){
+    const status = product.quantity < 5 ? "Düşük" : "Aktif";
+    const color = product.quantity < 5 ? "red" : "green";
+
+    table.innerHTML += `
+      <tr>
+        <td><input type="radio" name="selectedProduct" value="${product.id}"></td>
+        <td>${product.id}</td>
+        <td>${product.name}</td>
+        <td>${product.barcode}</td>
+        <td>${product.category}</td>
+        <td>${product.shelf}</td>
+        <td>${product.quantity}</td>
+        <td>${product.unit}</td>
+        <td>${product.buy} ₺</td>
+        <td>${product.sell} ₺</td>
+        <td style="color:${color};font-weight:bold">${status}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById("totalProducts").innerText = products.length;
+
+  document.getElementById("totalStock").innerText = products.reduce(function(total, product){
+    return total + Number(product.quantity);
+  }, 0);
+
+  document.getElementById("lowStock").innerText = products.filter(function(product){
+    return product.quantity < 5;
+  }).length;
+}
+
+function clearSearch(){
+  document.getElementById("searchInput").value = "";
+  renderProducts();
+}
+
+function exportCSV(){
+  let csv = "ID,Ürün,Barkod,Kategori,Raf,Stok,Birim,Alış,Satış\n";
+
+  products.forEach(function(product){
+    csv += `${product.id},${product.name},${product.barcode},${product.category},${product.shelf},${product.quantity},${product.unit},${product.buy},${product.sell}\n`;
+  });
+
+  const file = new Blob([csv], {type:"text/csv"});
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(file);
+  link.download = "stok-listesi.csv";
+  link.click();
+}
+
+function backupData(){
+  const file = new Blob([JSON.stringify(products, null, 2)], {type:"application/json"});
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(file);
+  link.download = "stok-yedek.json";
+  link.click();
+}
+
+renderProducts();
 </script>
 
 </body>
